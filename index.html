@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f8f3eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <title>声纹工坊 PWA</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div><p class="eyebrow">VOICEPRINT STUDIO</p><h1>声纹工坊</h1></div>
+      <button class="icon-button" id="settingsOpen" aria-label="打开 API 设置">⚙</button>
+    </header>
+
+    <main>
+      <div class="status-row"><span class="status-dot"></span><span id="activeStatus">当前接口：Milora 曼波免费版</span><button class="text-button" id="settingsOpen2">配置</button></div>
+
+      <section class="section-block">
+        <div class="section-heading"><span class="step">01</span><div><h2>参考音频</h2><p>录一段声音，或从“文件”App选择音频</p></div></div>
+        <div class="action-grid"><button class="action-card primary-soft" id="recordButton"><span class="card-icon">◉</span><strong id="recordLabel">开始录音</strong><small>建议 10–30 秒</small></button><button class="action-card" id="fileButton"><span class="card-icon">↥</span><strong>选择音频</strong><small>WAV / MP3 / M4A</small></button></div>
+        <input id="fileInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.flac" hidden />
+        <div class="reference-card empty" id="referenceCard"><span class="waveform" aria-hidden="true">▂▅▃▆▂▇▃▅▂▆▃▅▂</span><div><strong id="referenceName">还没有参考音频</strong><small id="referenceMeta">Milora 模式可跳过</small></div><span class="badge" id="referenceBadge">等待选择</span></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading"><span class="step">02</span><div><h2>文案与生成</h2><p>设置语速和情感，然后生成试听</p></div></div>
+        <textarea id="textInput" rows="4" placeholder="输入要合成的文字…">欢迎使用声纹工坊，今天也要保持好心情。</textarea>
+        <div class="control-row"><label>语速 <output id="speedValue">1.00×</output><input id="speedInput" type="range" min="0.75" max="1.50" step="0.05" value="1" /></label><label>情感<select id="emotionInput"><option>自然</option><option>温柔</option><option>开心</option><option>悲伤</option><option>沉稳</option><option>激动</option></select></label></div>
+        <button class="generate-button" id="generateButton"><span>生成试听</span><span>→</span></button>
+        <div class="result-card hidden" id="resultCard"><div class="result-top"><div><p class="eyebrow">生成结果</p><h3 id="resultTitle">生成完成</h3><p id="resultMeta">音频已经准备好</p></div><span class="success-mark">✓</span></div><audio id="audioPlayer" controls preload="metadata"></audio><div class="result-actions"><button class="secondary-button" id="downloadButton">下载到本地</button><button class="secondary-button" id="shareButton">分享</button></div></div>
+      </section>
+
+      <section class="section-block history-section"><div class="section-heading"><span class="step">03</span><div><h2>生成历史</h2><p>记录保存在当前浏览器</p></div></div><div id="historyList" class="history-list"><div class="empty-state">还没有生成记录</div></div></section>
+    </main>
+    <footer>只克隆本人或已获得明确授权的声音。API Key 只保存在本机浏览器中。</footer>
+  </div>
+
+  <div class="sheet-backdrop hidden" id="settingsBackdrop"><section class="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="sheet-header"><div><p class="eyebrow">LOCAL CONFIG</p><h2 id="settingsTitle">API 设置</h2></div><button class="icon-button" id="settingsClose">×</button></div><p class="sheet-note">每个服务商是独立配置槽位，切换不会覆盖其他 API Key。</p><div class="provider-tabs" id="providerTabs"></div><div class="config-panel"><label>Endpoint<input id="endpointInput" type="url" autocomplete="off" /></label><label>API Key<input id="apiKeyInput" type="password" autocomplete="off" /></label><label>模型名称<input id="modelInput" type="text" autocomplete="off" /></label><label>Voice ID / reference_id<input id="voiceInput" type="text" autocomplete="off" /></label><label>保存目录<input id="outputInput" type="text" autocomplete="off" placeholder="浏览器下载目录" /></label></div><div class="sheet-actions"><button class="secondary-button" id="settingsCancel">取消</button><button class="generate-button compact" id="settingsSave">保存当前配置</button></div><p class="privacy-note">配置会保存在此浏览器的 localStorage，不会上传到声纹工坊服务器。请不要在公共设备保存 API Key。</p></section></div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

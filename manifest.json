@@ -1,0 +1,1 @@
+{"name":"声纹工坊 PWA","short_name":"声纹工坊","description":"录音、音频参考、音色克隆与语音生成工具","start_url":"/","display":"standalone","background_color":"#f8f3eb","theme_color":"#f8f3eb","lang":"zh-CN","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
